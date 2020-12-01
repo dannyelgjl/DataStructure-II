@@ -90,3 +90,33 @@ function alterar (p) {
         }
     }
 }
+
+
+function prepararAlterar(idRow) {
+    document.getElementById('bntCadastrarSalvar').value = "Salvar";
+
+    var txtNome = document.getElementById('txtNome'),
+        Matricula = document.getElementById('txtMatricula'),
+        Idade = document.getElementById('txtIdade'),
+
+        var pessoas = JSON.parse(localStorage.getItem('value'));
+        for (var i = 0; i < pessoas.length; i++) {
+            if (pessoas[i].Id == idRow) {
+                txtNome.value = pessoas[i].Nome;
+                Matricula.value = pessoas[i].Matricula;
+                Idade.value = pessoas[i].Idade;
+
+                listar();
+
+                idAlterar = null;
+
+                if (idAlterar === null) {
+                    var th = document.getElementById('rowTable' + i);
+                    th.className = 'estadoAlteracao';
+                }
+
+                idAlterar = pessoas[i].Id;
+                break;
+            }
+        }
+}
