@@ -58,8 +58,35 @@ function adicionar(p) {
 
 
     pessoas.push(pessoa);
-    console.log(pessoa)
+    console.log(pessoa);
 
+    pessoas.sort(function(a, b){
+        return a.Id - b.Id;
+    });
+
+    localStorage.setItem('value', JSON.stringify(pessoas));
+
+    document.getElementById('frmCadastro').reset();
 }
 
 
+function alterar (p) {
+    var btn = document.getElementById('btnCadastrarSalvar');
+
+    pessoas = JSON.parse(localStorage.getItem('value'));
+
+    for(var i = 0; i < pessoas.length; i++) {
+        if (pessoas[i].Id == idAlterar) {
+            pessoas[i].Nome = p.nome;
+            pessoas[i].Matricula = p.matric;
+            pessoas[i].Idade = p.idad;
+
+            btn.value = 'Cadastrar';
+            idAlterar = null;
+        
+            localStorage.setItem('value', JSON.stringify(pessoas));
+            document.getElementById('frmCadastro').reset();
+            break;
+        }
+    }
+}
