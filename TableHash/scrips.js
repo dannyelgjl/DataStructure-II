@@ -97,7 +97,7 @@ function prepararAlterar(idRow) {
 
     var txtNome = document.getElementById('txtNome'),
         Matricula = document.getElementById('txtMatricula'),
-        Idade = document.getElementById('txtIdade'),
+        Idade = document.getElementById('txtIdade');
 
         var pessoas = JSON.parse(localStorage.getItem('value'));
         for (var i = 0; i < pessoas.length; i++) {
@@ -119,4 +119,21 @@ function prepararAlterar(idRow) {
                 break;
             }
         }
+}
+
+function excluir (cod) {
+    var pessoas = JSON.parse(localStorage.getItem('value'));
+
+    for(var i = 0; i < pessoas.length; i++) {
+        if (pessoas[i].Id == cod) {
+            pessoas.splice(i, 1);
+        }
+    }
+
+    localStorage.setItem('value', JSON.stringify(pessoas));
+    listar();
+
+    if (pessoas.length == 0) {
+        window.localStorage.removeItem('value');
+    }
 }
