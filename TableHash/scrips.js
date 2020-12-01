@@ -2,9 +2,9 @@
 
 // Ao carregar a página
 window.onload=function() {
-    // listar();
+    listar();
     document.getElementById('frmCadastro').addEventListener('submit', adicionarOuAlterar);
-    // document.getElementById('frmCadastro').addEventListener('submit', listar);
+    document.getElementById('frmCadastro').addEventListener('submit', listar);
 }
 
 var idAlterar = null;
@@ -93,7 +93,7 @@ function alterar (p) {
 
 
 function prepararAlterar(idRow) {
-    document.getElementById('bntCadastrarSalvar').value = "Salvar";
+    document.getElementById('btnCadastrarSalvar').value = "Cadastrar";
 
     var txtNome = document.getElementById('txtNome'),
         Matricula = document.getElementById('txtMatricula'),
@@ -135,5 +135,32 @@ function excluir (cod) {
 
     if (pessoas.length == 0) {
         window.localStorage.removeItem('value');
+    }
+}
+
+function listar() {
+    if (localStorage.getItem('value') === null) {
+        return;
+    }
+
+    var pessoas = JSON.parse(localStorage.getItem('value'));
+    var tbody = document.getElementById('tbodyResultados');
+
+    tbody.innerHTML = '';
+
+    for (var i = 0; i < pessoas.length; i++) {
+        var id = pessoas[i].Id;
+        nome = pessoas[i].Nome;
+        matric = pessoas[i].Matricula;
+        idad = pessoas[i].Idade;
+
+        tbody.innerHTML += '<tr id="rowTable'+i+'">'+
+                            '<td>'+id+'</td>'+
+                            '<td>'+nome+'</td>'+
+                            '<td>'+matric+'</td>'+
+                            '<td>'+idad+'</td>'+
+                            '<td><button onClick="excluir(\'' + id + '\')">Excluir</button></td>'+
+                            '<td><button onClick="prepararAlterar(\'' + id + '\')">Alterar</button></td>'+
+                            '</tr>';
     }
 }
