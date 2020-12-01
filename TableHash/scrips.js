@@ -2,9 +2,9 @@
 
 // Ao carregar a página
 window.onload=function() {
-    listar();
+    // listar();
     document.getElementById('frmCadastro').addEventListener('submit', adicionarOuAlterar);
-    document.getElementById('frmCadastro').addEventListener('submit', listar);
+    // document.getElementById('frmCadastro').addEventListener('submit', listar);
 }
 
 var idAlterar = null;
@@ -29,6 +29,37 @@ function adicionarOuAlterar(e) {
     
     e.preventDefault();
     
+}
+
+function adicionar(p) {
+    var pessoas = [];
+    var idValido = 1;
+
+    if (localStorage.getItem('value') !== null) {
+        pessoas = JSON.parse(localStorage.getItem('value'));
+
+        if (pessoas.length > 0) {
+            idValido = (function obterIdValido() {
+                for(var i = 0; i < pessoas.length; i++) {
+                    if (pessoas[i].Id != i+1) {
+                        return i + 1;
+                    }
+                }
+            })();
+        }
+    }
+
+    var pessoa = {
+        Id: idValido,
+        Nome: p.nome,
+        Matricula: p.matric,
+        Idade: p.idad
+    };
+
+
+    pessoas.push(pessoa);
+    console.log(pessoa)
+
 }
 
 
